@@ -7,7 +7,7 @@
 <style>
   :root{
     --bg:#0d1117; --card:#161b23; --line:#232b36; --text:#e6edf3;
-    --muted:#8b98a8; --accent:#4aa8ff; --accent-dim:rgba(74,168,255,.12);
+    --muted:#8b98a8; --accent:#4aa8ff;
   }
   *{box-sizing:border-box}
   html,body{margin:0;padding:0}
@@ -18,83 +18,66 @@
   }
   a{color:var(--accent); text-decoration:none}
 
-  header{
-    position:sticky; top:0; z-index:20;
-    background:rgba(13,17,23,.94); backdrop-filter:blur(12px);
-    border-bottom:1px solid var(--line);
-  }
-  .bar{
-    max-width:1500px; margin:0 auto; padding:13px 18px;
-    display:flex; align-items:center; gap:12px; flex-wrap:wrap;
-  }
+  header{position:sticky; top:0; z-index:20; background:rgba(13,17,23,.94);
+    backdrop-filter:blur(12px); border-bottom:1px solid var(--line)}
+  .bar{max-width:1500px; margin:0 auto; padding:13px 18px; display:flex;
+    align-items:center; gap:12px; flex-wrap:wrap}
   .brand{font-size:17px; font-weight:650; letter-spacing:.2px; display:flex; align-items:center; gap:9px}
   .brand .dot{width:9px;height:9px;border-radius:50%;background:var(--accent); box-shadow:0 0 12px var(--accent)}
   .brand small{color:var(--muted); font-weight:400; font-size:14px}
   .crumbs{margin-left:auto; color:var(--muted); font-size:13px; display:flex; gap:8px; align-items:center}
-  .crumbs a{color:var(--muted)}
-  .crumbs a:hover{color:var(--accent)}
+  .crumbs a{color:var(--muted)} .crumbs a:hover{color:var(--accent)}
 
   main{max-width:1500px; margin:0 auto; padding:20px 18px 60px}
   h2.page-h{font-size:19px; margin:0 0 4px; font-weight:600}
-  .sub{color:var(--muted); font-size:13px; margin-bottom:18px}
+  .sub{color:var(--muted); font-size:13px; margin-bottom:16px}
 
-  /* список эпизодов */
-  .eps{display:grid; gap:14px; grid-template-columns:repeat(auto-fill,minmax(230px,1fr))}
-  .ep{
-    background:var(--card); border:1px solid var(--line); border-radius:12px;
-    overflow:hidden; display:block; transition:transform .15s,border-color .15s;
+  .seasons{display:flex; gap:7px; flex-wrap:wrap; margin-bottom:18px}
+  .chip{
+    border:1px solid var(--line); background:var(--card); color:var(--muted);
+    padding:6px 13px; border-radius:20px; font-size:13px; cursor:pointer;
   }
+  .chip:hover{border-color:var(--accent); color:var(--text)}
+  .chip.on{background:rgba(74,168,255,.15); border-color:var(--accent); color:#cfe6ff}
+
+  .eps{display:grid; gap:14px; grid-template-columns:repeat(auto-fill,minmax(225px,1fr))}
+  .ep{background:var(--card); border:1px solid var(--line); border-radius:12px;
+    overflow:hidden; display:block; transition:transform .15s,border-color .15s}
   .ep:hover{transform:translateY(-3px); border-color:var(--accent)}
   .ep .cover{aspect-ratio:16/9; background:#0a0d12; position:relative}
   .ep .cover img{width:100%; height:100%; object-fit:cover; display:block}
-  .ep .tag{
-    position:absolute; top:8px; left:8px; font-size:11px; font-weight:600;
-    background:rgba(0,0,0,.72); color:#cfe3ff; padding:3px 7px; border-radius:5px;
-    letter-spacing:.4px;
-  }
+  .ep .tag{position:absolute; top:8px; left:8px; font-size:11px; font-weight:600;
+    background:rgba(0,0,0,.72); color:#cfe3ff; padding:3px 7px; border-radius:5px; letter-spacing:.3px}
   .ep .body{padding:10px 12px 12px}
-  .ep .name{font-size:14px; font-weight:550; margin-bottom:3px}
+  .ep .name{font-size:14px; font-weight:550; margin-bottom:3px; line-height:1.35}
   .ep .cnt{color:var(--muted); font-size:12px}
 
-  /* галерея */
   .grid{display:grid; gap:10px; grid-template-columns:repeat(auto-fill,minmax(180px,1fr))}
-  .card{
-    position:relative; display:block; background:var(--card); border:1px solid var(--line);
+  .card{position:relative; display:block; background:var(--card); border:1px solid var(--line);
     border-radius:10px; overflow:hidden; aspect-ratio:16/9; cursor:zoom-in;
-    transition:transform .12s, border-color .12s;
-  }
+    transition:transform .12s, border-color .12s}
   .card:hover{transform:translateY(-2px); border-color:var(--accent)}
   .card img{width:100%;height:100%;object-fit:cover;display:block;background:#0a0d12}
-  .tc{
-    position:absolute; bottom:6px; right:6px; font-size:11px;
-    background:rgba(0,0,0,.72); padding:2px 6px; border-radius:5px;
-    font-variant-numeric:tabular-nums; color:#cfd8e3;
-  }
+  .tc{position:absolute; bottom:6px; right:6px; font-size:11px; background:rgba(0,0,0,.72);
+    padding:2px 6px; border-radius:5px; font-variant-numeric:tabular-nums; color:#cfd8e3}
 
-  /* лайтбокс */
-  .lightbox{
-    position:fixed; inset:0; background:rgba(5,7,10,.97); z-index:50;
-    display:none; align-items:center; justify-content:center; flex-direction:column;
-  }
+  .lightbox{position:fixed; inset:0; background:rgba(5,7,10,.97); z-index:50;
+    display:none; align-items:center; justify-content:center; flex-direction:column}
   .lightbox.open{display:flex}
   .lightbox img{max-width:96vw; max-height:80vh; object-fit:contain; border-radius:6px}
   .lb-bar{display:flex; gap:16px; align-items:center; margin-top:12px; color:var(--muted); font-size:13px}
   .lb-bar b{color:var(--text); font-variant-numeric:tabular-nums}
-  .lb-btn{
-    position:absolute; top:50%; transform:translateY(-50%); background:rgba(255,255,255,.07);
-    border:0; color:#fff; font-size:26px; width:46px; height:72px; border-radius:9px; cursor:pointer;
-  }
+  .lb-btn{position:absolute; top:50%; transform:translateY(-50%); background:rgba(255,255,255,.07);
+    border:0; color:#fff; font-size:26px; width:46px; height:72px; border-radius:9px; cursor:pointer}
   .lb-btn:hover{background:rgba(255,255,255,.16)}
   .lb-prev{left:12px} .lb-next{right:12px}
   .lb-close{position:absolute; top:12px; right:14px; background:none; border:0; color:#fff; font-size:32px; cursor:pointer; line-height:1}
-  .empty{color:var(--muted); text-align:center; padding:60px 0}
+  .empty,.loading{color:var(--muted); text-align:center; padding:70px 0}
   footer{color:var(--muted); font-size:12px; text-align:center; padding:0 18px 34px}
   @media(max-width:520px){
     .grid{grid-template-columns:repeat(auto-fill,minmax(140px,1fr)); gap:7px}
-    .eps{grid-template-columns:repeat(auto-fill,minmax(165px,1fr)); gap:10px}
-    .brand{font-size:15px}
-    .bar{padding:11px 14px}
-    main{padding:16px 14px 50px}
+    .eps{grid-template-columns:repeat(auto-fill,minmax(158px,1fr)); gap:10px}
+    .brand{font-size:15px} .bar{padding:11px 14px} main{padding:16px 14px 50px}
   }
 </style>
 </head>
@@ -107,7 +90,7 @@
   </div>
 </header>
 
-<main id="view"></main>
+<main id="view"><div class="loading">Загрузка…</div></main>
 <footer>Скринкапсы каждые 0,5 секунды · TalkingFriendsRU</footer>
 
 <div class="lightbox" id="lb">
@@ -118,83 +101,115 @@
   <button class="lb-btn lb-next" id="lbNext" aria-label="Вперёд">›</button>
 </div>
 
-<script src="data/episodes.js"></script>
+<script src="data/catalog.js"></script>
 <script>
-const EPS = window.EPISODES || [];
+const CATALOG = window.CATALOG || [];
 const view = document.getElementById("view");
 const crumbs = document.getElementById("crumbs");
+let filterSeason = null;
+
+const SERIES = { TTAF: "Говорящий Том и Друзья", TTHSS: "Говорящий Том Герои", TTS: "Короткие серии" };
 
 const timecode = (i, interval) => {
   const s = (i + 0.5) * interval;
   const m = Math.floor(s / 60);
-  const r = (s - m * 60).toFixed(1).padStart(4, "0");
-  return `${m}:${r}`;
+  return `${m}:${(s - m * 60).toFixed(1).padStart(4, "0")}`;
 };
 
 /* ---------- список эпизодов ---------- */
 function renderList(){
   crumbs.innerHTML = "";
-  if (!EPS.length){
-    view.innerHTML = '<div class="empty">Пока нет ни одного эпизода</div>';
-    return;
-  }
-  const cards = EPS.map(ep => {
-    const n = ep.frames.length;
-    const cover = n ? ep.frames[0][0] : "";
-    return `<a class="ep" href="#/${ep.code}">
-      <div class="cover"><img loading="lazy" src="${cover}" alt="${ep.code}">
-        <span class="tag">${ep.code}</span></div>
+  if (!CATALOG.length){ view.innerHTML = '<div class="empty">Пока нет ни одного эпизода</div>'; return; }
+
+  const seasons = [...new Set(CATALOG.filter(e => e.series === "TTAF").map(e => e.season))].sort((a,b)=>a-b);
+  const chips = [`<span class="chip ${filterSeason===null?'on':''}" data-s="all">Все</span>`]
+    .concat(seasons.map(s => `<span class="chip ${filterSeason===s?'on':''}" data-s="${s}">Сезон ${s}</span>`))
+    .join("");
+
+  const list = filterSeason === null ? CATALOG : CATALOG.filter(e => e.series !== "TTAF" || e.season === filterSeason);
+
+  const cards = list.map(ep => `
+    <a class="ep" href="#/${ep.code}">
+      <div class="cover"><img loading="lazy" src="${ep.cover}" alt="${ep.code}">
+        <span class="tag">${ep.series === "TTAF" ? `S${ep.season}·E${ep.ep}` : ep.code}</span></div>
       <div class="body">
-        <div class="name">${ep.title || ep.code}</div>
-        <div class="cnt">${n} кадров · каждые ${ep.interval} с</div>
+        <div class="name">${ep.title}</div>
+        <div class="cnt">${ep.count} кадров · ${ep.code}</div>
       </div>
-    </a>`;
-  }).join("");
+    </a>`).join("");
 
   view.innerHTML = `
     <h2 class="page-h">Эпизоды</h2>
-    <div class="sub">${EPS.length} ${EPS.length === 1 ? "эпизод" : "эпизодов"} · короткие серии</div>
+    <div class="sub">${list.length} ${list.length===1?"эпизод":"эпизодов"} · ${SERIES.TTAF}</div>
+    <div class="seasons">${chips}</div>
     <div class="eps">${cards}</div>`;
+
+  view.querySelectorAll(".chip").forEach(c => c.addEventListener("click", () => {
+    filterSeason = c.dataset.s === "all" ? null : +c.dataset.s;
+    renderList();
+  }));
 }
 
-/* ---------- галерея одного эпизода ---------- */
-function renderGallery(code){
-  const ep = EPS.find(e => e.code.toLowerCase() === code.toLowerCase());
-  if (!ep){
-    view.innerHTML = '<div class="empty">Эпизод не найден</div>';
-    crumbs.innerHTML = '<a href="#">← Все эпизоды</a>';
-    return;
-  }
-  crumbs.innerHTML = `<a href="#">Все эпизоды</a> <span>/</span> <span>${ep.code}</span>`;
-  const cards = ep.frames.map(([thumb, full], i) => `
+/* ---------- галерея: кадры грузим отдельным файлом ---------- */
+function loadFrames(code){
+  return new Promise((resolve, reject) => {
+    const s = document.createElement("script");
+    s.src = `data/frames/${code}.js`;
+    s.onload = () => resolve(window.FRAMES);
+    s.onerror = () => reject(new Error("нет файла кадров"));
+    document.head.appendChild(s);
+  });
+}
+
+async function renderGallery(code){
+  const meta = CATALOG.find(e => e.code.toLowerCase() === code.toLowerCase());
+  crumbs.innerHTML = `<a href="#">Все эпизоды</a> <span>/</span> <span>${code}</span>`;
+  if (!meta){ view.innerHTML = '<div class="empty">Эпизод не найден</div>'; return; }
+
+  view.innerHTML = '<div class="loading">Загружаем кадры…</div>';
+  let data;
+  try { data = await loadFrames(meta.code); }
+  catch(e){ view.innerHTML = '<div class="empty">Не удалось загрузить кадры эпизода</div>'; return; }
+
+  const cards = data.frames.map(([thumb], i) => `
     <div class="card" data-i="${i}">
-      <img loading="lazy" src="${thumb}" alt="кадр ${i + 1}">
-      <span class="tc">${timecode(i, ep.interval)}</span>
+      <img loading="lazy" src="${thumb}" alt="кадр ${i+1}" data-fb="${data.frames[i][2] || ""}">
+      <span class="tc">${timecode(i, data.interval)}</span>
     </div>`).join("");
 
   view.innerHTML = `
-    <h2 class="page-h">${ep.title || ep.code}</h2>
-    <div class="sub">${ep.frames.length} кадров · интервал ${ep.interval} с · ${ep.code}</div>
+    <h2 class="page-h">${meta.title}</h2>
+    <div class="sub">${meta.series === "TTAF" ? `Сезон ${meta.season}, серия ${meta.ep} · ` : ""}${data.frames.length} кадров · интервал ${data.interval} с</div>
     <div class="grid">${cards}</div>`;
 
   view.querySelectorAll(".card").forEach(el => {
-    el.addEventListener("click", () => openLb(ep, +el.dataset.i));
+    el.addEventListener("click", () => openLb(data, +el.dataset.i));
+    const img = el.querySelector("img");
+    if (img) img.addEventListener("error", () => {
+      const fb = img.dataset.fb;
+      if (fb && img.src !== fb){ img.src = fb; img.dataset.fb = ""; }
+    });
   });
 }
 
 /* ---------- лайтбокс ---------- */
 const lb = document.getElementById("lb");
 const lbImg = document.getElementById("lbImg");
-let curEp = null, cur = 0;
+lbImg.addEventListener("error", () => {
+  const fb = lbImg.dataset.fb;
+  if (fb && lbImg.src !== fb){ lbImg.src = fb; lbImg.dataset.fb = ""; }
+});
+let curData = null, cur = 0;
 
-function openLb(ep, i){ curEp = ep; cur = i; paint(); lb.classList.add("open"); }
+function openLb(data, i){ curData = data; cur = i; paint(); lb.classList.add("open"); }
 function paint(){
-  const [, full] = curEp.frames[cur];
-  lbImg.src = full;
-  document.getElementById("lbPos").textContent = `${cur + 1} / ${curEp.frames.length}`;
-  document.getElementById("lbTc").textContent = timecode(cur, curEp.interval);
+  const f = curData.frames[cur];
+  lbImg.dataset.fb = f[2] || "";
+  lbImg.src = f[1];
+  document.getElementById("lbPos").textContent = `${cur+1} / ${curData.frames.length}`;
+  document.getElementById("lbTc").textContent = timecode(cur, curData.interval);
 }
-const step = d => { cur = (cur + d + curEp.frames.length) % curEp.frames.length; paint(); };
+const step = d => { cur = (cur + d + curData.frames.length) % curData.frames.length; paint(); };
 document.getElementById("lbPrev").onclick = () => step(-1);
 document.getElementById("lbNext").onclick = () => step(1);
 document.getElementById("lbClose").onclick = () => lb.classList.remove("open");
@@ -217,8 +232,7 @@ lb.addEventListener("touchend", e => {
 /* ---------- роутинг ---------- */
 function route(){
   const m = location.hash.match(/^#\/(.+)$/);
-  if (m) renderGallery(decodeURIComponent(m[1]));
-  else renderList();
+  if (m) renderGallery(decodeURIComponent(m[1])); else renderList();
 }
 window.addEventListener("hashchange", route);
 route();
